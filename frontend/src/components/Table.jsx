@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { GrView } from 'react-icons/gr'
 import { MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md'
@@ -11,7 +10,20 @@ const Table = ({ todos, setTodos, isLoading }) => {
 
   return (
     <div data-theme="forest" className='py-2 overflow-x-auto'>
-      <table className='table table-xs'>
+      {/* Search Button */}
+      <input className='input input-bordered join-item' placeholder='Search' />
+      <select className='select select-bordered join-item'>
+        <option disabled selected>Filter</option>
+        <option>AJB</option>
+        <option>PBB</option>
+        <option>SHM</option>
+        <option>HGB</option>
+      </select>
+      <div className="indicator">
+      <button className="btn btn-secondary join-item">Search</button>
+      </div>
+      {/* Search Button End */}
+      <table className='table table-xs table-pin-rows table-pin-cols	'>
         <thead data-theme="forest" className="tracking-wider text-white">
           <tr>
             <th className='p-3 text-sm font-semibold text-center'>No.</th>
@@ -25,7 +37,7 @@ const Table = ({ todos, setTodos, isLoading }) => {
             <th className='p-3 text-sm font-semibold text-center'>Actions</th>
           </tr>
         </thead>
-        <tbody data-theme="light" className=' text-black ztext-sm tracking-wider text-center'>
+        <tbody data-theme="light" className=' text-black text-sm tracking-wider text-center'>
           {isLoading ? <div>
             <span className="loading loading-spinner text-info">Backend ENGINE Not Running</span>
           </div> :
