@@ -11,8 +11,8 @@ const Table = ({ todos, setTodos, isLoading }) => {
   return (
     <div data-theme="forest" className='py-2 overflow-x-auto'>
       {/* Search Button */}
-      <input className='input input-bordered input-sm join-item' placeholder='Search' />
-      <select className='select select-sm select-bordered join-item'>
+      <input className='input input-bordered input-xs join-item' placeholder='Search' />
+      <select className='select select-xs select-bordered join-item'>
         <option disabled selected>Filter</option>
         <option>AJB</option>
         <option>PBB</option>
@@ -20,11 +20,11 @@ const Table = ({ todos, setTodos, isLoading }) => {
         <option>HGB</option>
       </select>
       <div className="indicator">
-        <button className="btn btn-secondary btn-sm join-item">Search</button>
+        <button className="btn btn-accent btn-xs join-item">Search</button>
       </div>
       {/* Search Button End */}
       {/*Table Start */}
-      <table className='table table-zebra table-xs'>
+      <table className='table table-auto table-zebra table-xs'>
         <thead data-theme="forest" className="tracking-wider text-white">
           <tr>
             <th className='p-3 text-sm font-semibold text-center'>No.</th>
@@ -34,12 +34,12 @@ const Table = ({ todos, setTodos, isLoading }) => {
             <th className='p-3 text-sm font-semibold text-center'>PPAT</th>
             <th className='p-3 text-sm font-semibold text-center'>Alamat Properti</th>
             <th className='p-3 text-sm font-semibold text-center'>Status</th>
-            <th className='p-3 text-sm font-semibold text-center'>Date Submit</th>
+            <th className='p-3 text-sm font-semibold text-center'>Expired Date</th>
             <th className='p-3 text-sm font-semibold text-center'>Actions</th>
           </tr>
         </thead>
         <tbody data-theme="light" className=' text-black text-sm tracking-wider text-center'>
-          {isLoading ? <div>
+          {isLoading ? <div data-theme='forest' className='content-center'>
             <span className="loading loading-spinner text-info">Backend ENGINE Not Running</span>
           </div> :
             <>
@@ -59,9 +59,7 @@ const Table = ({ todos, setTodos, isLoading }) => {
                     </td>
                     <td className='p-3'>{new Date(todoItem.created).toLocaleString()}</td>
                     <td className='p-3 font-medium grid grid-flow-col items-center mt-3 ml-5'>
-                      <th>
-                        <button className="btn btn-ghost btn-xs">details</button>
-                      </th>
+                      <button className="btn btn-ghost btn-xs">details</button>
                     </td>
                   </tr>
                 )
