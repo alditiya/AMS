@@ -28,7 +28,7 @@ class Todo(models.Model):
     alamatProperti = models.CharField(
         "Alamat Properti atau Bangunan", max_length=255, default="Indonesia")
     ppat = models.CharField(
-        "Nama Notaris Tertera pada dokumen", max_length=255)
+        "Pejabat Pembuat Akta Tanah", max_length=255)
     pdf = models.FileField("Unggah Dokumen", upload_to='store/pdfs')
     
     def __str__(self): # type: ignore
