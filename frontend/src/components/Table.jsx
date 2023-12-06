@@ -1,28 +1,79 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react'
-import { GrView } from 'react-icons/gr'
-import { MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md'
+import React, { useState, useEffect, Component } from 'react'
+import axios from 'axios'
+import { Viewer } from '@react-pdf-viewer/core'
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'
+import { FaCloudDownloadAlt } from "react-icons/fa";
+import { LuEye } from "react-icons/lu";
+import '@react-pdf-viewer/core/lib/styles/index.css'
+import '@react-pdf-viewer/default-layout/lib/styles/index.css'
 
+import { pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
 
 const Table = ({ todos, setTodos, isLoading }) => {
 
 
+  let api = 'http://127.0.0.1:8000/api'
+
+
+  const forceDownload = (response, title) => {
+    console.log(response)
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', title + '.pdf')
+    document.body.appendChild(link)
+    link.click()
+
+    // clean up "a" element & remove ObjectURL
+    document.body.removeChild(link);
+    URL.revokeObjectURL(href);
+
+  }
+
+
+
+  const downloadWithAxios = (url, title) => {
+    axios({
+      method: 'get',
+      url,
+      responseType: 'arraybuffer'
+    }).then((response) => {
+      forceDownload(response, title)
+    }).catch((error) => console.log(error))
+
+  }
+
+  const viewWithAxios = (url, title) => {
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
+
+    const onDocumentLoadSuccess = ({ numPages }) => {
+      setNumPages(numPages);
+    };
+
+    const goToPrevPage = () =>
+      setPageNumber(pageNumber - 1 <= 1 ? 1 : pageNumber - 1);
+
+    const goToNextPage = () =>
+      setPageNumber(
+        pageNumber + 1 >= numPages ? numPages : pageNumber + 1,
+      );
+
+  }
+
+
+
   return (
     <div data-theme="forest" className='py-2 overflow-x-auto'>
-      {/* Search Button */}
-      <input className='input input-bordered input-xs join-item' placeholder='Search' />
-      <select className='select select-xs select-bordered join-item'>
-        <option disabled selected>Filter</option>
-        <option>AJB</option>
-        <option>PBB</option>
-        <option>SHM</option>
-        <option>HGB</option>
-      </select>
-      <div className="indicator">
-        <button className="btn btn-accent btn-xs join-item">Search</button>
-      </div>
-      {/* Search Button End */}
       {/*Table Start */}
       <table className='table table-auto table-zebra table-xs'>
         <thead data-theme="forest" className="tracking-wider text-white">
@@ -43,7 +94,7 @@ const Table = ({ todos, setTodos, isLoading }) => {
             <span className="loading loading-spinner text-info">Backend ENGINE Not Running</span>
           </div> :
             <>
-              {todos.map((todoItem, index) => {
+              {todos.map((todoItem, Files) => {
                 return (
                   <tr key={todoItem.id} className='border-t-2'>
                     <td className='p-3'>{todoItem.id}.</td>
@@ -54,18 +105,20 @@ const Table = ({ todos, setTodos, isLoading }) => {
                     <td className='p-3'>{todoItem.alamatProperti}</td>
                     <td className='p-3'>
                       <span data-theme="dracula" className={`p-1.5 text-black text-xs font-medium tracking-wider ${todoItem.completed ? 'bg-green-400' : 'bg-red-400'}`}>
-                        {todoItem.completed ? 'Completed' : 'Incompleted'}
+                        {todoItem.completed ? 'Available' : 'Borrowed'}
                       </span>
                     </td>
-                    <td className='p-3'>{new Date(todoItem.created).toLocaleString()}</td>
+                    <td className='p-3'>{new Date(todoItem.created).toLocaleDateString()}</td>
                     <td className='p-3 font-medium grid grid-flow-col items-center'>
-                      <button className="btn btn-ghost btn-xs">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                        <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                        <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clipRule="evenodd" />
-                      </svg>
+                      <a href="" target="_blank" rel="noreferrer"></a>
+                      <button onClick={() => open(todoItem.pdf)} className="btn btn-ghost btn-xs">
+                        <LuEye />
+                        Details
                       </button>
-                      
+                      <button onClick={() => downloadWithAxios(todoItem.pdf, todoItem.nameDoc + " " + todoItem.jenisDokumen)} className="btn btn-ghost btn-xs">
+                        <FaCloudDownloadAlt />
+                        Downloads
+                      </button>
                     </td>
                   </tr>
                 )
@@ -77,5 +130,8 @@ const Table = ({ todos, setTodos, isLoading }) => {
     </div>
   )
 }
+
+
+
 
 export default Table

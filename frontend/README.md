@@ -1,4 +1,4 @@
-# Assets Management Sistem Sahabat Agritama 
+# Assets Management Sistem Sahabat Agritama
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -10,3 +10,10 @@ Stack Use
 - NodeJs
 - npm
 - Daisyui
+- Tailwindcss
+- PostgreSQL Database
+- Docker
+- Nginx
+- Redis
+- Celery
+- RabbitMQ

@@ -19,12 +19,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-
+admin.site.site_title = "Asset's Management site admin (DEV)"
+admin.site.site_header = "Asset's Management Backend"
+admin.site.index_title = "Backend"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include ('todo.urls')),
-    path('', include('todo.urls'))
+    path("admin/", admin.site.urls),
+    path("api-auth/", include("rest_framework.urls")),
+    path("", include("todo.urls")),
+    path("", include("sertifikat.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
