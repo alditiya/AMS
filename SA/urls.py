@@ -15,19 +15,34 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.auth.models import User
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenVerifyView,
+    TokenRefreshView,
+)
+
 
 admin.site.site_title = "Asset's Management site admin (DEV)"
-admin.site.site_header = "Asset's Management Backend"
-admin.site.index_title = "Backend"
+admin.site.site_header = "Asset's Management Back Office"
+admin.site.index_title = "AMS Back Office"
+
+
+# Serializers define the API representation
+
+# Routers provide an easy way of automatically determining the URL Conf
+
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api-auth/", include("rest_framework.urls")),
+    path("ams-bo/", admin.site.urls),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    ##path("", include("rest_framework.urls")),
     path("", include("todo.urls")),
-    path("", include("sertifikat.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

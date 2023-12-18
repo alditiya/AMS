@@ -4,24 +4,29 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, Component } from 'react'
 import axios from 'axios'
-import { Viewer } from '@react-pdf-viewer/core'
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'
 import { FaCloudDownloadAlt } from "react-icons/fa";
 import { LuEye } from "react-icons/lu";
 import '@react-pdf-viewer/core/lib/styles/index.css'
 import '@react-pdf-viewer/default-layout/lib/styles/index.css'
-
 import { pdfjs } from 'react-pdf';
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from '@chakra-ui/react'
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
   import.meta.url,
 ).toString();
 
-const Table = ({ todos, setTodos, isLoading }) => {
-
-
-  let api = 'http://127.0.0.1:8000/api'
+const TableView = ({ todos, setTodos, isLoading }) => {
 
 
   const forceDownload = (response, title) => {
@@ -36,10 +41,7 @@ const Table = ({ todos, setTodos, isLoading }) => {
     // clean up "a" element & remove ObjectURL
     document.body.removeChild(link);
     URL.revokeObjectURL(href);
-
   }
-
-
 
   const downloadWithAxios = (url, title) => {
     axios({
@@ -72,66 +74,67 @@ const Table = ({ todos, setTodos, isLoading }) => {
 
 
 
+
+
   return (
-    <div data-theme="forest" className='py-2 overflow-x-auto'>
-      {/*Table Start */}
-      <table className='table table-auto table-zebra table-xs'>
-        <thead data-theme="forest" className="tracking-wider text-white">
-          <tr>
-            <th className='p-3 text-sm font-semibold text-center'>No.</th>
-            <th className='p-3 text-sm font-semibold text-center'>Nomor Dokumen</th>
-            <th className='p-3 text-sm font-semibold text-center'>Nama Properti</th>
-            <th className='p-3 text-sm font-semibold text-center'>Jenis Dokumen</th>
-            <th className='p-3 text-sm font-semibold text-center'>PPAT</th>
-            <th className='p-3 text-sm font-semibold text-center'>Alamat Properti</th>
-            <th className='p-3 text-sm font-semibold text-center'>Status</th>
-            <th className='p-3 text-sm font-semibold text-center'>Expired Date</th>
-            <th className='p-3 text-sm font-semibold text-center'>Actions</th>
-          </tr>
-        </thead>
-        <tbody data-theme="light" className=' text-black text-sm tracking-wider text-center'>
-          {isLoading ? <div data-theme='forest' className='content-center'>
-            <span className="loading loading-spinner text-info">Backend ENGINE Not Running</span>
-          </div> :
-            <>
-              {todos.map((todoItem, Files) => {
-                return (
-                  <tr key={todoItem.id} className='border-t-2'>
-                    <td className='p-3'>{todoItem.id}.</td>
-                    <td className='p-3'>{todoItem.noDoc}</td>
-                    <td className='p-3'>{todoItem.nameDoc}</td>
-                    <td className='p-3 '>{todoItem.jenisDokumen}</td>
-                    <td className='p-3'>{todoItem.ppat}</td>
-                    <td className='p-3'>{todoItem.alamatProperti}</td>
-                    <td className='p-3'>
-                      <span data-theme="dracula" className={`p-1.5 text-black text-xs font-medium tracking-wider ${todoItem.completed ? 'bg-green-400' : 'bg-red-400'}`}>
-                        {todoItem.completed ? 'Available' : 'Borrowed'}
-                      </span>
-                    </td>
-                    <td className='p-3'>{new Date(todoItem.created).toLocaleDateString()}</td>
-                    <td className='p-3 font-medium grid grid-flow-col items-center'>
-                      <a href="" target="_blank" rel="noreferrer"></a>
-                      <button onClick={() => open(todoItem.pdf)} className="btn btn-ghost btn-xs">
-                        <LuEye />
-                        Details
-                      </button>
-                      <button onClick={() => downloadWithAxios(todoItem.pdf, todoItem.nameDoc + " " + todoItem.jenisDokumen)} className="btn btn-ghost btn-xs">
-                        <FaCloudDownloadAlt />
-                        Downloads
-                      </button>
-                    </td>
-                  </tr>
-                )
-              })
-              }</>}
-        </tbody>
-      </table>
-      {/*Table End */}
-    </div>
+    <TableContainer>
+      <div data-theme="forest" className='py-2 overflow-x-auto'>
+
+        {/*Table Start */}
+        <Table size='sm' variant='striped' className='table table-auto table-zebra table-xs'>
+          <Thead>
+            <Tr>
+              <Th className='p-3 text-sm font-semibold text-center'>No.</Th>
+              <Th className='p-3 text-sm font-semibold text-center'>Nomor Dokumen</Th>
+              <Th className='p-3 text-sm font-semibold text-center'>Nama Properti</Th>
+              <Th className='p-3 text-sm font-semibold text-center'>Jenis Dokumen</Th>
+              <Th className='p-3 text-sm font-semibold text-center'>PPAT</Th>
+              <Th className='p-3 text-sm font-semibold text-center'>Alamat Properti</Th>
+              <Th className='p-3 text-sm font-semibold text-center'>Status</Th>
+              <Th className='p-3 text-sm font-semibold text-center'>Expired Date</Th>
+              <Th className='p-3 text-sm font-semibold text-center'>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {isLoading ?
+              <span className="loading loading-spinner text-info">Backend ENGINE Not Running</span>
+              :
+              <>
+                {todos.map((todoItem) => {
+                  return (
+                    <Tr key={todoItem.id} className='border-t-2'>
+                      <Td className='p-3'>{todoItem.id}.</Td>
+                      <Td className='p-3'>{todoItem.noDoc}</Td>
+                      <Td className='p-3'>{todoItem.nameDoc}</Td>
+                      <Td className='p-3 '>{todoItem.jenisDokumen}</Td>
+                      <Td className='p-3'>{todoItem.ppat}</Td>
+                      <Td className='p-3'>{todoItem.alamatProperti}</Td>
+                      <Td className='p-3'>
+                        <span data-theme="dracula" className={`p-1.5 text-black text-xs font-medium tracking-wider ${todoItem.completed ? 'bg-green-400' : 'bg-red-400'}`}>
+                          {todoItem.completed ? 'Available' : 'Borrowed'}
+                        </span>
+                      </Td>
+                      <Td className='p-3'>{new Date(todoItem.created).toLocaleDateString()}</Td>
+                      <Td className='p-3 font-medium grid grid-flow-col items-center'>
+                        <a href="" target="_blank" ></a>
+                        <button onClick={() => open(todoItem.pdf)} className="btn btn-ghost btn-xs">
+                          <LuEye />
+                          Details
+                        </button>
+                        <button onClick={() => downloadWithAxios(todoItem.pdf, todoItem.nameDoc + "_" + todoItem.jenisDokumen)} className="btn btn-ghost btn-xs">
+                          <FaCloudDownloadAlt />
+                          Downloads
+                        </button>
+                      </Td>
+                    </Tr>
+                  )
+                })
+                }</>}
+          </Tbody>
+        </Table>
+        {/*Table End */}
+      </div>
+    </TableContainer >
   )
 }
-
-
-
-
-export default Table
+export default TableView

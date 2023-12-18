@@ -1,9 +1,11 @@
 from django.db import models
+from django.db.models import Q
 
 # Create your models here.
 
 
 class Todo(models.Model):
+    id = models.AutoField(primary_key=True)
     nameDoc = models.CharField("Nama Dokumen", max_length=255, blank=False)
     noDoc = models.CharField("Nomor Dokumen", max_length=25, null=False)
 
@@ -42,3 +44,8 @@ class Todo(models.Model):
 
     def __str__(self):
         return self.body
+
+    class Meta:
+        unique_together = ("id", "noDoc")
+        verbose_name = "Sertifikat"
+        verbose_name_plural = "Sertifikat's"
