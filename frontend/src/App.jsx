@@ -62,12 +62,14 @@ function App() {
             >
               Asset&apos;s management
             </Box>
+            <Paragraph>
 
-            <TableView
-              todos={todos}
-              setTodos={setTodos}
-              isLoading={isLoading}
-            />
+              <TableView
+                todos={todos}
+                setTodos={setTodos}
+                isLoading={isLoading}
+              />
+            </Paragraph>
             <Footer />
           </Section>
         </Container>

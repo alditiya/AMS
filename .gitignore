@@ -10,6 +10,8 @@ migration
 .next
 .DS_Store
 .env
+pyc
+.pyc
 node_modules
 media
 *.pyc

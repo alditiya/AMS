@@ -41,6 +41,7 @@ APPEND_SLASH = False
 # Application definition
 
 INSTALLED_APPS = [
+    ##"grappelli",
     "admin_interface",
     "colorfield",
     "django.contrib.admin",
@@ -179,3 +180,5 @@ JWT_AUTH = {
     "JWT_ALLOW_REFRESH": True,
     "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=1),
 }
+
+GRAPPELLI_ADMIN_TITLE = "Back Office AMS"

@@ -15,6 +15,8 @@ import {
   Tbody,
   Tfoot,
   Tr,
+  Button,
+  Center,
   Th,
   Td,
   TableCaption,
@@ -77,14 +79,15 @@ const TableView = ({ todos, setTodos, isLoading }) => {
 
 
   return (
+
     <TableContainer>
       <div data-theme="forest" className='py-2 overflow-x-auto'>
 
         {/*Table Start */}
-        <Table size='sm' variant='striped' className='table table-auto table-zebra table-xs'>
+        <Table size='sm' textAlign='center' variant='striped' className='table table-auto table-zebra table-xs'>
           <Thead>
             <Tr>
-              <Th className='p-3 text-sm font-semibold text-center'>No.</Th>
+              <Th className='p-3 text-xs font-semibold text-center'>No.</Th>
               <Th className='p-3 text-sm font-semibold text-center'>Nomor Dokumen</Th>
               <Th className='p-3 text-sm font-semibold text-center'>Nama Properti</Th>
               <Th className='p-3 text-sm font-semibold text-center'>Jenis Dokumen</Th>
@@ -95,6 +98,7 @@ const TableView = ({ todos, setTodos, isLoading }) => {
               <Th className='p-3 text-sm font-semibold text-center'>Actions</Th>
             </Tr>
           </Thead>
+
           <Tbody>
             {isLoading ?
               <span className="loading loading-spinner text-info">Backend ENGINE Not Running</span>
@@ -102,29 +106,30 @@ const TableView = ({ todos, setTodos, isLoading }) => {
               <>
                 {todos.map((todoItem) => {
                   return (
-                    <Tr key={todoItem.id} className='border-t-2'>
-                      <Td className='p-3'>{todoItem.id}.</Td>
-                      <Td className='p-3'>{todoItem.noDoc}</Td>
-                      <Td className='p-3'>{todoItem.nameDoc}</Td>
-                      <Td className='p-3 '>{todoItem.jenisDokumen}</Td>
-                      <Td className='p-3'>{todoItem.ppat}</Td>
-                      <Td className='p-3'>{todoItem.alamatProperti}</Td>
-                      <Td className='p-3'>
-                        <span data-theme="dracula" className={`p-1.5 text-black text-xs font-medium tracking-wider ${todoItem.completed ? 'bg-green-400' : 'bg-red-400'}`}>
+                    <Tr key={todoItem.id} className='border-t-2 items-center text-center'>
+                      <Td extAlign="center">{todoItem.id}.</Td>
+                      <Td className='p-3 text-center'>{todoItem.noDoc}</Td>
+                      <Td className='p-3 text-center'>{todoItem.nameDoc}</Td>
+                      <Td className='p-3 text-center'>{todoItem.jenisDokumen}</Td>
+                      <Td className='p-3 text-center'>{todoItem.ppat}</Td>
+                      <Td className='p-3 text-center'>{todoItem.alamatProperti}</Td>
+                      <Td className='p-3 text-center'>
+                        <span className={`p-1.5 text-black text-xs font-normal tracking-wider ${todoItem.completed ? 'bg-green-400' : 'bg-red-400'}`}>
                           {todoItem.completed ? 'Available' : 'Borrowed'}
                         </span>
                       </Td>
-                      <Td className='p-3'>{new Date(todoItem.created).toLocaleDateString()}</Td>
-                      <Td className='p-3 font-medium grid grid-flow-col items-center'>
+                      <Td className='p-3 text-center'>{new Date(todoItem.created).toLocaleDateString()}</Td>
+                      <Td className='p-3 font-medium text-center'>
                         <a href="" target="_blank" ></a>
-                        <button onClick={() => open(todoItem.pdf)} className="btn btn-ghost btn-xs">
+                        <Button onClick={() => open(todoItem.pdf)} className="btn btn-ghost items-center">
+
                           <LuEye />
-                          Details
-                        </button>
-                        <button onClick={() => downloadWithAxios(todoItem.pdf, todoItem.nameDoc + "_" + todoItem.jenisDokumen)} className="btn btn-ghost btn-xs">
+
+                        </Button>
+                        <Button onClick={() => downloadWithAxios(todoItem.pdf, todoItem.nameDoc + "_" + todoItem.jenisDokumen)} className="btn items-center btn-ghost">
                           <FaCloudDownloadAlt />
-                          Downloads
-                        </button>
+
+                        </Button>
                       </Td>
                     </Tr>
                   )
@@ -135,6 +140,7 @@ const TableView = ({ todos, setTodos, isLoading }) => {
         {/*Table End */}
       </div>
     </TableContainer >
+
   )
 }
 export default TableView
