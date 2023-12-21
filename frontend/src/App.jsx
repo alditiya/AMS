@@ -7,7 +7,7 @@ import TableView from './components/Table'
 import Paragraph from './components/paragraph'
 import Layout from './components/layouts/article'
 import Section from './components/section'
-import { Heading, Container, Box, useColorModeValue, ChakraProvider } from '@chakra-ui/react'
+import { Heading, Table, Container, Box, useColorModeValue, ChakraProvider } from '@chakra-ui/react'
 import Footer from './components/footer'
 import LogRocket from 'logrocket';
 
@@ -54,7 +54,7 @@ function App() {
           <Section delay={0.5}>
             <Box
               borderRadius="lg"
-              mb={6}
+              mb={5}
               p={3}
               textAlign="center"
               bg={useColorModeValue('blue.100', 'whiteAlpha.200')}
@@ -62,14 +62,15 @@ function App() {
             >
               Asset&apos;s management
             </Box>
-            <Paragraph>
 
-              <TableView
-                todos={todos}
-                setTodos={setTodos}
-                isLoading={isLoading}
-              />
-            </Paragraph>
+            <TableView
+              todos={todos}
+              setTodos={setTodos}
+              isLoading={isLoading}
+            />
+
+
+
             <Footer />
           </Section>
         </Container>

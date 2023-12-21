@@ -13,6 +13,7 @@ import {
   Table,
   Thead,
   Tbody,
+  Box,
   Tfoot,
   Tr,
   Button,
@@ -84,59 +85,61 @@ const TableView = ({ todos, setTodos, isLoading }) => {
       <div data-theme="forest" className='py-2 overflow-x-auto'>
 
         {/*Table Start */}
-        <Table size='sm' textAlign='center' variant='striped' className='table table-auto table-zebra table-xs'>
-          <Thead>
-            <Tr>
-              <Th className='p-3 text-xs font-semibold text-center'>No.</Th>
-              <Th className='p-3 text-sm font-semibold text-center'>Nomor Dokumen</Th>
-              <Th className='p-3 text-sm font-semibold text-center'>Nama Properti</Th>
-              <Th className='p-3 text-sm font-semibold text-center'>Jenis Dokumen</Th>
-              <Th className='p-3 text-sm font-semibold text-center'>PPAT</Th>
-              <Th className='p-3 text-sm font-semibold text-center'>Alamat Properti</Th>
-              <Th className='p-3 text-sm font-semibold text-center'>Status</Th>
-              <Th className='p-3 text-sm font-semibold text-center'>Expired Date</Th>
-              <Th className='p-3 text-sm font-semibold text-center'>Actions</Th>
-            </Tr>
-          </Thead>
+        <Box overflowX="auto">
+          <Table size='sm' textAlign="center" variant='striped' overflowX="auto" colorScheme='brand'>
+            <Thead textAlign="center">
+              <Tr textAlign="center">
+                <Th textAlign="center">No.</Th>
+                <Th textAlign="center">Nomor Dokumen</Th>
+                <Th textAlign="center">Nama Properti</Th>
+                <Th textAlign="center">Jenis Dokumen</Th>
+                <Th textAlign="center">PPAT</Th>
+                <Th textAlign="center">Alamat Properti</Th>
+                <Th textAlign="center">Status</Th>
+                <Th textAlign="center">Expired Date</Th>
+                <Th textAlign="center">Actions</Th>
+              </Tr>
+            </Thead>
 
-          <Tbody>
-            {isLoading ?
-              <span className="loading loading-spinner text-info">Backend ENGINE Not Running</span>
-              :
-              <>
-                {todos.map((todoItem) => {
-                  return (
-                    <Tr key={todoItem.id} className='border-t-2 items-center text-center'>
-                      <Td extAlign="center">{todoItem.id}.</Td>
-                      <Td className='p-3 text-center'>{todoItem.noDoc}</Td>
-                      <Td className='p-3 text-center'>{todoItem.nameDoc}</Td>
-                      <Td className='p-3 text-center'>{todoItem.jenisDokumen}</Td>
-                      <Td className='p-3 text-center'>{todoItem.ppat}</Td>
-                      <Td className='p-3 text-center'>{todoItem.alamatProperti}</Td>
-                      <Td className='p-3 text-center'>
-                        <span className={`p-1.5 text-black text-xs font-normal tracking-wider ${todoItem.completed ? 'bg-green-400' : 'bg-red-400'}`}>
-                          {todoItem.completed ? 'Available' : 'Borrowed'}
-                        </span>
-                      </Td>
-                      <Td className='p-3 text-center'>{new Date(todoItem.created).toLocaleDateString()}</Td>
-                      <Td className='p-3 font-medium text-center'>
-                        <a href="" target="_blank" ></a>
-                        <Button onClick={() => open(todoItem.pdf)} className="btn btn-ghost items-center">
+            <Tbody textAlign="center">
+              {isLoading ?
+                <span className="loading loading-spinner text-info">Backend ENGINE Not Running</span>
+                :
+                <>
+                  {todos.map((todoItem) => {
+                    return (
+                      <Tr key={todoItem.id} textAlign="center">
+                        <Td textAlign="center">{todoItem.id}.</Td>
+                        <Td textAlign="center">{todoItem.noDoc}</Td>
+                        <Td textAlign="center">{todoItem.nameDoc}</Td>
+                        <Td textAlign="center">{todoItem.jenisDokumen}</Td>
+                        <Td textAlign="center">{todoItem.ppat}</Td>
+                        <Td textAlign="center">{todoItem.alamatProperti}</Td>
+                        <Td textAlign="center">
+                          <span className={`p-1.5 text-black text-xs font-normal tracking-wider ${todoItem.completed ? 'bg-green-400' : 'bg-red-400'}`}>
+                            {todoItem.completed ? 'Available' : 'Borrowed'}
+                          </span>
+                        </Td>
+                        <Td textAlign="center">{new Date(todoItem.created).toLocaleDateString()}</Td>
+                        <Td textAlign="center">
+                          <a href="" target="_blank" ></a>
+                          <Button onClick={() => open(todoItem.pdf)} className="btn btn-ghost items-center">
 
-                          <LuEye />
+                            <LuEye />
 
-                        </Button>
-                        <Button onClick={() => downloadWithAxios(todoItem.pdf, todoItem.nameDoc + "_" + todoItem.jenisDokumen)} className="btn items-center btn-ghost">
-                          <FaCloudDownloadAlt />
+                          </Button>
+                          <Button onClick={() => downloadWithAxios(todoItem.pdf, todoItem.nameDoc + "_" + todoItem.jenisDokumen)} className="btn items-center btn-ghost">
+                            <FaCloudDownloadAlt />
 
-                        </Button>
-                      </Td>
-                    </Tr>
-                  )
-                })
-                }</>}
-          </Tbody>
-        </Table>
+                          </Button>
+                        </Td>
+                      </Tr>
+                    )
+                  })
+                  }</>}
+            </Tbody>
+          </Table>
+        </Box>
         {/*Table End */}
       </div>
     </TableContainer >
